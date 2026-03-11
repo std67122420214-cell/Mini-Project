@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+  {{title}}
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="mt-3">{{title}}</h1>
+    <hr>
+    <div class="row">
+      <h1 class="text-success">{{formulaone.name}}</h1>
+    </div>
+    <div class="row">
+      <div class="col-md mt-3">
+        <img src="{{formulaone.img_url}}" alt="" class="img-thumbnail">
+      </div>
+      <div class="col-md mt-3 mb-3">
+        <h2 class="text-success">nationality:</h2>
+        <h3>{{formulaone.nationality}}</h3>
+        <h2 class="text-success">World_Championships:</h2>
+        <h3>{{formulaone.World_Championships}}</h3>
+        <h2 class="text-success">number:</h2>
+        <h3>{{formulaone.number}}</h3>
+        <br><br>
+        <h2 class="text-success">formulaone Type</h2>
+        {% for type in formulaone.Teams %}
+            <a class="btn btn-outline-secondary btn-sm">
+              {{type.name}}
+            </a>
+        {% endfor %}
+        <br>
+        <hr>
+        <div class="float-end">
+          <a href="{{url_for('core.index')}}" class="btn btn-outline-success">
+            <i class="bi bi-skip-backward-btn"></i>
+            Back to Home Page
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+

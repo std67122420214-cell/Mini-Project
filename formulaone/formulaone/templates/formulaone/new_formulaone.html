@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="container mt-3 mb-3">
+    <h1>{{ title }}</h1>
+    <hr>
+
+```
+<div class="card mt-3">
+  <div class="card-header">
+    <h3>New Driver Form</h3>
+  </div>
+
+  <div class="card-body">
+    <form method="post">
+
+      <div class="mb-3">
+        <label for="name" class="form-label">Driver Name</label>
+        <input name="name" type="text" class="form-control" id="name" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="number" class="form-label">Driver Number</label>
+        <input name="number" type="text" class="form-control" id="number" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="world_championships" class="form-label">World Championships</label>
+        <input name="world_championships" type="text" class="form-control" id="world_championships" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="nationality" class="form-label">Nationality</label>
+        <textarea name="nationality" class="form-control" id="nationality" rows="3"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="img_url" class="form-label">Driver Image URL</label>
+        <input name="img_url" type="text" class="form-control" id="img_url" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="teams" class="form-label">Teams</label>
+        <select name="teams" class="form-select" multiple>
+          {% for team in teams %}
+            <option value="{{ team.id }}">{{ team.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <hr>
+
+      <button type="submit" class="btn btn-outline-secondary">
+        <i class="bi bi-file-earmark-plus"></i>
+        Add New Driver
+      </button>
+
+    </form>
+  </div>
+</div>
+```
+
+  </div>
+{% endblock %}
