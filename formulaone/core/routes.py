@@ -2,8 +2,11 @@ from flask import Blueprint, render_template, request
 from formulaone.extensions import db
 from formulaone.models import FormulaOne
 
-core_bp = Blueprint("core", __name__)
-
+core_bp = Blueprint(
+    "core",
+    __name__,
+    template_folder="templates"
+)
 
 @core_bp.route("/")
 def index():
@@ -17,6 +20,6 @@ def index():
     )
 
     return render_template(
-        "index.html",
+        "core/index.html",
         formulaones=formulaones
     )
