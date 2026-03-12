@@ -1,10 +1,8 @@
 
 formulaone_Teams = [
-  'Water', 'Fire', 'Grass', 'Flying', 'Rock',
-  'Ground', 'Steel', 'Electric', 'Fairy', 'Ghost',
-  'Dark', 'Dragon', 'Ice', 'Bug', 'Fighting', 'Poison',
-  'Psychic', 'Normal'
-]
-
+  'Mercedes','Ferrari','McLaren',
+  'Red Bull Racing','Haas','Aston Martin',
+  'Racing Bulls','Audi','Alpine','Williams','Cadillac'
+  ]
 from formulaone.models import Type
 Teams = [Type(name=type) for type in formulaone_Teams]
