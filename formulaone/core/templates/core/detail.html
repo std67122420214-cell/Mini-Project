@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-3 mb-3">
+
+<h1>Formula One Detail Page</h1>
+<hr>
+
+<h2 class="text-success">{{ formulaone.name }}</h2>
+
+<div class="row mt-4">
+
+  <!-- LEFT : IMAGE -->
+  <div class="col-md-5">
+    <img src="{{ formulaone.img_url }}" class="img-fluid border rounded">
+  </div>
+
+  <!-- RIGHT : DETAIL -->
+  <div class="col-md-7">
+
+    <div class="row mb-2">
+      <div class="col-5 text-success"><b>Number:</b></div>
+      <div class="col-7">{{ formulaone.number }}</div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-5 text-success"><b>Nationality:</b></div>
+      <div class="col-7">{{ formulaone.nationality }}</div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-5 text-success"><b>World Championships:</b></div>
+      <div class="col-7">{{ formulaone.world_championships }}</div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-5 text-success"><b>Team:</b></div>
+      <div class="col-7">
+        {% for team in formulaone.teams %}
+          <span class="btn btn-outline-secondary btn-sm">
+            {{ team.name }}
+          </span>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<hr>
+
+<div class="text-end">
+  <a href="{{ url_for('formulaone.index') }}" class="btn btn-outline-success">
+    ⬅ Back to Home Page
+  </a>
+</div>
+
+</div>
+
+{% endblock %}

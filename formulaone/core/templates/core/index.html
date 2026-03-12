@@ -1,35 +1,47 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-  {{title}}
+{{ title }}
 {% endblock %}
 
 {% block content %}
-  <div class="container mt-3">
-    <h1>{{title}}</h1>
-    <hr>
-    <div class="row">
-      {% for formulaone in formulaones %}
-        <div class="col-lg-3">
-          <div class="card mt-4 card-formulaone">
-            <a href="{{url_for('core.detail', id=formulaone.id)}}">
-              <img src="{{formulaone.img_url}}" alt="" class="card-img-top bg-secondary">
-            </a>
-            <div class="card-body">
-              <h2 class="text-success">{{formulaone.name}}</h2>
-              {% for type in formulaone.Teams %}
-                <a href="#" class="btn btn-outline-secondary btn-sm">
-                  {{type.name}}
-                </a>
-              {% endfor %}
-              
-            </div>
-          </div>
+
+<div class="container mt-3 mb-3">
+
+  <h1>Home Page</h1>
+  <hr>
+
+  <div class="row">
+
+  {% for formulaone in formulaones.items %}
+    <div class="col-lg-3">
+      <div class="card mt-4 card-formulaone">
+
+        <a href="{{ url_for('core.detail', id=formulaone.id) }}">
+          <img src="{{ formulaone.img_url }}" class="card-img-top bg-secondary">
+        </a>
+
+        <div class="card-body">
+          <h4 class="text-success">{{ formulaone.name }}</h4>
+
+          {% for team in formulaone.teams %}
+            <span class="btn btn-outline-secondary btn-sm">
+              {{ team.name }}
+            </span>
+          {% endfor %}
+
         </div>
-      {% endfor %}
-      
+
+      </div>
     </div>
-    <br>
-    {% include "core/pagination.html" %}
+  {% endfor %}
+
   </div>
+
+  <br>
+
+  {% include "core/pagination.html" %}
+
+</div>
+
 {% endblock %}

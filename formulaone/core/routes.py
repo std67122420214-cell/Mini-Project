@@ -8,6 +8,7 @@ core_bp = Blueprint(
     template_folder="templates"
 )
 
+
 @core_bp.route("/")
 def index():
 
@@ -21,5 +22,18 @@ def index():
 
     return render_template(
         "core/index.html",
+        title="Home Page",
         formulaones=formulaones
+    )
+
+
+@core_bp.route("/detail/<int:id>")
+def detail(id):
+
+    formulaone = db.get_or_404(FormulaOne, id)
+
+    return render_template(
+        "core/detail.html",
+        title=formulaone.name,
+        formulaone=formulaone
     )

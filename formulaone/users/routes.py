@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from formulaone.extensions import db, bcrypt
 from formulaone.models import User
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 
 users_bp = Blueprint("users", __name__, template_folder="templates")
 
@@ -81,3 +81,36 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("core.index"))
+
+
+# Change Password
+@users_bp.route("/change_password", methods=["GET", "POST"])
+@login_required
+def change_password():
+
+    if request.method == "POST":
+
+        current_password = request.form.get("current_password")
+        new_password = request.form.get("new_password")
+        confirm_password = request.form.get("confirm_password")
+
+        if not bcrypt.check_password_hash(current_user.password, current_password):
+            flash("Current password incorrect!", "warning")
+            return redirect(url_for("users.change_password"))
+
+        if new_password != confirm_password:
+            flash("New password not match!", "warning")
+            return redirect(url_for("users.change_password"))
+
+        new_hash = bcrypt.generate_password_hash(new_password).decode("utf-8")
+
+        current_user.password = new_hash
+        db.session.commit()
+
+        flash("Password changed successfully!", "success")
+        return redirect(url_for("users.index"))
+
+    return render_template(
+        "users/change_password.html",
+        title="Change Password"
+    )
