@@ -68,6 +68,8 @@ class FormulaOne(db.Model):
     nationality: Mapped[str] = mapped_column(Text, nullable=False)
     img_url: Mapped[str] = mapped_column(Text, nullable=False)
 
+    biography: Mapped[str] = mapped_column(Text, nullable=True)  # เพิ่ม Biography
+
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey("user.id"))
 
     created_at: Mapped[datetime] = mapped_column(

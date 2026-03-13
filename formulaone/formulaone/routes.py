@@ -40,6 +40,7 @@ def new_formulaone():
         world_championships = request.form.get("world_championships")
         nationality = request.form.get("nationality")
         img_url = request.form.get("img_url")
+        biography = request.form.get("biography")   # ✅ เพิ่มตรงนี้
 
         team_ids = request.form.getlist("teams")
 
@@ -63,6 +64,7 @@ def new_formulaone():
             world_championships=world_championships,
             nationality=nationality,
             img_url=img_url,
+            biography=biography,   # ✅ เพิ่มตรงนี้
             user_id=current_user.id,
             teams=selected_teams,
         )

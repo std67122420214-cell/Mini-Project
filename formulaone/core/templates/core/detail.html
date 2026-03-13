@@ -38,7 +38,7 @@
       <div class="col-7">{{ formulaone.world_championships }}</div>
     </div>
 
-    <div class="row mb-3">
+    <div class="row mb-2">
       <div class="col-5 text-success"><b>Team:</b></div>
       <div class="col-7">
         {% for team in formulaone.teams %}
@@ -49,6 +49,14 @@
       </div>
     </div>
 
+    <!-- BIOGRAPHY -->
+    <div class="row mt-3">
+      <div class="col-5 text-success"><b>Biography:</b></div>
+      <div class="col-7">
+        {{ formulaone.biography }}
+      </div>
+    </div>
+
   </div>
 
 </div>
@@ -56,7 +64,7 @@
 <hr>
 
 <div class="text-end">
-  <a href="{{ url_for('formulaone.index') }}" class="btn btn-outline-success">
+  <a href="{{ url_for('core.index') }}" class="btn btn-outline-success">
     ⬅ Back to Home Page
   </a>
 </div>
