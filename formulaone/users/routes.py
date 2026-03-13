@@ -27,7 +27,6 @@ def register():
         password = request.form.get("password")
         confirm_password = request.form.get("confirm_password")
 
-        # check username
         query = db.select(User).where(User.username == username)
         user = db.session.scalar(query)
 
@@ -35,7 +34,6 @@ def register():
             flash("Username already exists!", "warning")
             return redirect(url_for("users.register"))
 
-        # check email
         query = db.select(User).where(User.email == email)
         user = db.session.scalar(query)
 
