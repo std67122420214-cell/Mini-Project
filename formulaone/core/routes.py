@@ -13,9 +13,17 @@ core_bp = Blueprint(
 def index():
 
     page = request.args.get("page", 1, type=int)
+    search = request.args.get("search", "")
+
+    query = db.select(FormulaOne)
+
+    if search:
+        query = query.where(
+            FormulaOne.name.ilike(f"%{search}%")
+        )
 
     formulaones = db.paginate(
-        db.select(FormulaOne),
+        query,
         per_page=4,
         page=page
     )

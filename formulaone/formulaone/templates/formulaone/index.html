@@ -7,46 +7,96 @@
 {% block content %}
 
 <div class="container mt-3 mb-3">
-  <h1>{{ title }}</h1>
-  <hr>
 
-  <div class="row">
+  <div class="row align-items-center">
+
     <div class="col-md-6">
-      <a href="{{ url_for('formulaone.new_formulaone') }}" class="btn btn-outline-secondary">
-        <i class="bi bi-file-earmark-plus"></i>
-        New Driver
-      </a>
+      <h1 class="mb-0">{{ title }}</h1>
     </div>
-    <div class="col-md-6"></div>
+
+    <div class="col-md-4 ms-auto">
+      <form method="GET" action="{{ url_for('formulaone.index') }}">
+        <div class="input-group input-group-sm">
+
+          <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="Search driver..."
+            value="{{ request.args.get('search','') }}"
+          >
+
+          <button class="btn btn-outline-primary">
+            <i class="bi bi-search"></i>
+          </button>
+
+        </div>
+      </form>
+    </div>
+
   </div>
 
-  <table class="table table-hover mt-3">
+  <hr>
+
+  <div class="mb-2">
+    <a href="{{ url_for('formulaone.new_formulaone') }}" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-file-earmark-plus"></i>
+      New Driver
+    </a>
+  </div>
+
+  <table class="table table-hover mt-2">
     <thead>
       <tr>
         <th>#</th>
         <th>Driver Name</th>
         <th>Created At</th>
+        <th width="160">Action</th>
       </tr>
     </thead>
 
     <tbody>
       {% for driver in formulaones.items %}
       <tr>
+
         <td>{{ loop.index }}</td>
+
         <td>{{ driver.name }}</td>
-        <td>{{ driver.created_at }}</td>
+
+        <td>{{ driver.created_at.strftime("%d-%m-%Y") }}</td>
+
+        <td>
+
+          <a
+            href="{{ url_for('formulaone.edit', id=driver.id) }}"
+            class="btn btn-warning btn-sm"
+          >
+            <i class="bi bi-pencil"></i>
+          </a>
+
+          <a
+            href="{{ url_for('formulaone.delete', id=driver.id) }}"
+            class="btn btn-danger btn-sm"
+            onclick="return confirm('Are you sure?')"
+          >
+            <i class="bi bi-trash"></i>
+          </a>
+
+        </td>
+
       </tr>
       {% endfor %}
     </tbody>
+
   </table>
 
-  <!-- Pagination -->
   <nav class="mt-3">
     <ul class="pagination">
 
       {% if formulaones.has_prev %}
       <li class="page-item">
-        <a class="page-link" href="{{ url_for('formulaone.index', page=formulaones.prev_num) }}">
+        <a class="page-link"
+           href="{{ url_for('formulaone.index', page=formulaones.prev_num, search=request.args.get('search')) }}">
           Previous
         </a>
       </li>
@@ -60,7 +110,8 @@
           </li>
           {% else %}
           <li class="page-item">
-            <a class="page-link" href="{{ url_for('formulaone.index', page=page_num) }}">
+            <a class="page-link"
+               href="{{ url_for('formulaone.index', page=page_num, search=request.args.get('search')) }}">
               {{ page_num }}
             </a>
           </li>
@@ -70,7 +121,8 @@
 
       {% if formulaones.has_next %}
       <li class="page-item">
-        <a class="page-link" href="{{ url_for('formulaone.index', page=formulaones.next_num) }}">
+        <a class="page-link"
+           href="{{ url_for('formulaone.index', page=formulaones.next_num, search=request.args.get('search')) }}">
           Next
         </a>
       </li>

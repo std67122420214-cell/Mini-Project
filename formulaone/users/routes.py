@@ -6,14 +6,19 @@ from flask_login import login_user, logout_user, login_required, current_user
 users_bp = Blueprint("users", __name__, template_folder="templates")
 
 
-@users_bp.route("/")
+# Profile Page
+@users_bp.route("/profile")
 @login_required
-def index():
+def profile():
     return render_template("users/index.html", title="User Page")
 
 
+# Register
 @users_bp.route("/register", methods=["GET", "POST"])
 def register():
+
+    if current_user.is_authenticated:
+        return redirect(url_for("core.index"))
 
     if request.method == "POST":
 
@@ -22,11 +27,20 @@ def register():
         password = request.form.get("password")
         confirm_password = request.form.get("confirm_password")
 
+        # check username
         query = db.select(User).where(User.username == username)
         user = db.session.scalar(query)
 
         if user:
             flash("Username already exists!", "warning")
+            return redirect(url_for("users.register"))
+
+        # check email
+        query = db.select(User).where(User.email == email)
+        user = db.session.scalar(query)
+
+        if user:
+            flash("Email already exists!", "warning")
             return redirect(url_for("users.register"))
 
         if password != confirm_password:
@@ -50,8 +64,12 @@ def register():
     return render_template("users/register.html", title="Register Page")
 
 
+# Login
 @users_bp.route("/login", methods=["GET", "POST"])
 def login():
+
+    if current_user.is_authenticated:
+        return redirect(url_for("core.index"))
 
     if request.method == "POST":
 
@@ -71,15 +89,18 @@ def login():
 
         login_user(user)
         flash("Login successful!", "success")
-        return redirect(url_for("users.index"))
+
+        return redirect(url_for("core.index"))
 
     return render_template("users/login.html", title="Login Page")
 
 
+# Logout
 @users_bp.route("/logout")
 @login_required
 def logout():
     logout_user()
+    flash("Logout successful!", "success")
     return redirect(url_for("core.index"))
 
 
@@ -108,7 +129,7 @@ def change_password():
         db.session.commit()
 
         flash("Password changed successfully!", "success")
-        return redirect(url_for("users.index"))
+        return redirect(url_for("users.profile"))
 
     return render_template(
         "users/change_password.html",

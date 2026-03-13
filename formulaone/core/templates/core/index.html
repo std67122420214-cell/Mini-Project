@@ -8,7 +8,38 @@
 
 <div class="container mt-3 mb-3">
 
-  <h1>Home Page</h1>
+  <div class="row align-items-center">
+
+    <div class="col-md-6">
+      <h1 class="mb-0">Home Page</h1>
+    </div>
+
+    <div class="col-md-4 ms-auto">
+
+      <form method="GET" action="{{ url_for('core.index') }}">
+
+        <div class="input-group">
+
+          <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="Search driver..."
+            value="{{ request.args.get('search','') }}"
+          >
+
+          <button class="btn btn-outline-primary">
+            <i class="bi bi-search"></i>
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
   <hr>
 
   <div class="row">
